@@ -9,13 +9,15 @@ from django.core.exceptions import ValidationError
 from django.contrib import messages, contenttypes
 from rest_framework import generics, permissions
 from .serializers import ArtistSerializerCreation, ArtistSerializerView
+from knox.auth import TokenAuthentication
 
 # Create your views here.
 
 
-class ArtistCreate(generics.ListCreateAPIView):
-    # permission_classes = [permissions.IsAuthenticated]
-    permission_classes = [permissions.AllowAny]
+class ArtistCreate(generics.CreateAPIView):
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = [permissions.IsAuthenticated]
+    # permission_classes = [permissions.AllowAny]
     serializer_class = ArtistSerializerCreation
     queryset = Artist.objects.all()
 

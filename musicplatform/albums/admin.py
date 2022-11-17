@@ -1,4 +1,3 @@
-import imp
 from pyexpat import model
 from xml.etree.ElementTree import tostring
 from django.contrib import admin

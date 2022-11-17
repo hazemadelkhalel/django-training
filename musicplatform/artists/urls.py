@@ -1,10 +1,9 @@
 
 from django.contrib import admin
 from django.urls import path, include
-from .views import ArtistCreate, ArtistPush, ViewArtist
+from .views import ArtistCreate, ArtistView
 
 urlpatterns = [
-    path('', ViewArtist),
-    path('create/', ArtistCreate),
-    path('publish/', ArtistPush)
+    path('', ArtistView.as_view()),
+    path('create/', ArtistCreate.as_view()),
 ]

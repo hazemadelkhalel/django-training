@@ -13,5 +13,4 @@ class ArtistAdmin(admin.ModelAdmin):
         return Album.objects.all().filter(artist = obj.id , approved = True).count()
     inlines = [AlbumInline]
     list_display = ('name', 'Number_of_Approved_Albums',  )
-    # add_fieldsets = ((None, {'fields' : ('getAlbums',)}, ), )
 admin.site.register(Artist, ArtistAdmin)

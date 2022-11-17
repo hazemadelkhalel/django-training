@@ -1,0 +1,22 @@
+{% block content %}
+
+<ul>
+    {% for artist in artist_list %}
+        <li>ID: {{ artist.id }}</li>
+        <li>Stage name: {{ artist.name }}</li>
+        <li>Social: {{ artist.social_link }}</li>
+        <li>Albums: </li>
+        <ul>
+            {% for album in artist.albums.all %}
+                <li>ID: {{ album.id }}</li>
+                <li>name: {{ album.album_name }}</li>
+                <li>Creation Time: {{ album.creation_date }}</li>
+                <li>Release datetime: {{ album.release_date }}</li>
+                <li>Cost: {{album.cost}}</li>
+            {% endfor %}
+        </ul>
+        <br>
+    {% endfor %}
+</ul>
+
+{% endblock %}

@@ -1,3 +1,4 @@
+import imp
 from xml.etree.ElementTree import tostring
 from django.contrib import admin
 
@@ -9,4 +10,5 @@ class AlbumAdmin(admin.ModelAdmin):
     list_display = ('album_name', 'approved', )
     ordering = ('-approved', )
 admin.site.register(Album, AlbumAdmin)
+
 

@@ -1,15 +1,24 @@
-from django.contrib.auth import login
+from .models import UserProfile
+from .serializers import UserProfileSerializer
+from rest_framework import generics
+from django.contrib.auth.models import User
+from django.http import Http404
+from rest_framework.response import Response
 
-from rest_framework import permissions
-from rest_framework.authtoken.serializers import AuthTokenSerializer
-from knox.views import LoginView as KnoxLoginView
-
-class LoginView(KnoxLoginView):
-    permission_classes = (permissions.AllowAny,)
-
-    def post(self, request, format=None):
-        serializer = AuthTokenSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        user = serializer.validated_data['user']
-        login(request, user)
-        return super(LoginView, self).post(request, format=None)
+class UserProfileGenerics(generics.UpdateAPIView, generics.ListAPIView):
+    serializer_class = UserProfileSerializer
+    queryset = UserProfile.objects.all()
+    def get_queryset(self):
+        try: 
+            user = User.objects.get(pk = self.kwargs['pk'])
+            userProfile = UserProfile.objects.filter(user = user)
+            return userProfile
+        except:
+            raise Http404
+    def update(self, request, *args, **kwargs):
+        user = User.objects.get(pk = kwargs['pk'])
+        prof = UserProfile.objects.get(user = user)
+        serializer = UserProfileSerializer(prof, data = request.data, partial = True)
+        if serializer.is_valid():
+            serializer.save()
+        return Response(serializer.data)

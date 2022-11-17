@@ -1,8 +1,6 @@
-import imp
-from importlib.resources import path
-from knox import views as knox_views
-from .views import LoginView
 from django.urls import path
+from .views import  UserProfileGenerics
 urlpatterns = [
-     path('login/', LoginView.as_view(), name='knox_login'),
+    # path('<int:pk>/',get_user),
+    path('<int:pk>/', UserProfileGenerics.as_view()),
 ]

@@ -1,9 +1,8 @@
 
 from django.contrib import admin
 from django.urls import path, include
-from .views import AlbumPush, AlbumCreate
+from .views import AlbumCreate
 
 urlpatterns = [
-    path('create/', AlbumCreate),
-    path('publish/', AlbumPush)
+    path('create/', AlbumCreate.as_view()),
 ]

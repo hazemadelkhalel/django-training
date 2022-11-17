@@ -1,11 +1,12 @@
 from tkinter import Widget
 from django import forms
+from django.forms import ModelForm
 
 from artists.models import Artist
 from django.contrib.admin.widgets import AdminDateWidget
 from django.core.exceptions import ValidationError
 
-from albums.models import Album
+from albums.models import Album, Song
 
 
 class AlbumCreateForm(forms.Form):
@@ -15,9 +16,8 @@ class AlbumCreateForm(forms.Form):
     release_date = forms.DateField()
     cost = forms.FloatField()
     approved = forms.BooleanField(help_text = "Note: Approve the album if its name is not explicit")
-    def clean_album_name(self):
-        print("Hahah")
-        if Album.objects.filter(album_name = self.cleaned_data.get("album_name")).count() > 0:
-            raise ValidationError("This album already exists")
-        else:
-            return self.cleaned_data.get("album")
+
+class SongForm(ModelForm):
+    class Meta:
+        model = Song
+        fields ='__all__'
